@@ -18,7 +18,7 @@ import {
 // import type { TeeLogQuery, TeeLogService } from "@elizaos/plugin-tee-log";
 // import { REST, Routes } from "discord.js";
 import type { DirectClient } from ".";
-import { validateUuid } from "@elizaos/core";
+import { validateUuid,stringToUuid } from "@elizaos/core";
 
 interface UUIDParams {
     agentId: UUID;
@@ -72,6 +72,11 @@ export function createApiRouter(
 
     router.get("/hello", (req, res) => {
         res.json({ message: "Hello World!" });
+    });
+
+    router.get("/agent/id/:characterName", (req, res) => {
+        const agentId = stringToUuid(req.params.characterName);
+        res.json({ agentId: agentId });
     });
 
     router.get("/agents", (req, res) => {
